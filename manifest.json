@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Hello Chrome",
+  "description" : "Hello Chrome",
+  "version": "0.1.0",
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "img/icon16.png",
+      "48": "img/icon48.png",
+      "128": "img/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": ["scripts/background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "tabs"
+  ]
+}
