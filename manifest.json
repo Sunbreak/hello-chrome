@@ -16,7 +16,10 @@
     }
   },
   "background": {
-    "scripts": ["scripts/background.js"],
+    "scripts": [
+      "scripts/browser-polyfill.min.js",
+      "scripts/background.js"
+    ],
     "persistent": false
   },
   "permissions": [

@@ -1,23 +1,18 @@
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.browserAction.onClicked.addListener(function(tab) {
-    const url = chrome.runtime.getURL("index.html");
-    chrome.tabs.query({ url }, function(tabs) {
-      if (tabs.length == 0) {
-        chrome.tabs.create({ url });
-        return;
-      }
+browser.runtime.onInstalled.addListener(function() {
+  browser.browserAction.onClicked.addListener(async function(currentTab) {
+    const url = browser.runtime.getURL("index.html");
+    const tabs = await browser.tabs.query({ url });
+    if (tabs.length === 0) {
+      browser.tabs.create({ url });
+      return;
+    }
 
-      const tab = tabs[0];
-      chrome.windows.getCurrent({}, function(current) {
-        if (current.id == tab.windowId) {
-          chrome.tabs.update(tab.id, { active: true });
-          return;
-        }
+    const targetTab = tabs[0];
+    const currentWindow = await browser.windows.getCurrent();
+    if (currentWindow.id !== targetTab.windowId) {
+      await browser.windows.update(targetTab.windowId, { focused: true });
+    }
 
-        chrome.windows.update(tab.windowId, { focused: true }, function(window) {
-          chrome.tabs.update(tab.id, { active: true });
-        });
-      });
-    });
+    await browser.tabs.update(targetTab.id, { active: true });
   });
 });
